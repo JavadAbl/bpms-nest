@@ -15,3 +15,44 @@ model User {
   id   Int    @id() @default(autoincrement())
   name String
 }
+
+model WorkflowDefinition {
+  id          Int      @id() @default(autoincrement())
+  key         String   @unique()
+  name        String
+  description String?
+  version     Int      @default(1)
+  definition  String   // BPMN XML
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  instances   WorkflowInstance[]
+}
+
+model WorkflowInstance {
+  id                Int      @id() @default(autoincrement())
+  definitionId      Int
+  definition        WorkflowDefinition @relation(fields: [definitionId], references: [id])
+  status            String   @default("pending") // pending, running, completed, failed, suspended
+  businessKey       String?
+  variables         String   @default("{}") // JSON string for workflow variables
+  currentElements   String?  // JSON array of currently active element ids
+  startedAt         DateTime @default(now())
+  completedAt       DateTime?
+  errorMessage      String?
+  
+  executionLogs     WorkflowExecutionLog[]
+}
+
+model WorkflowExecutionLog {
+  id         Int      @id() @default(autoincrement())
+  instanceId Int
+  instance   WorkflowInstance @relation(fields: [instanceId], references: [id])
+  eventType  String   // element_start, element_end, error, variable_update, etc.
+  elementId  String?
+  elementName String?
+  message    String?
+  details    String?  // JSON string for additional details
+  createdAt  DateTime @default(now())
+}
