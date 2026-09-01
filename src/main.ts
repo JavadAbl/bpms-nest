@@ -14,26 +14,11 @@ import { AppConfigs, isDev, isProd } from '#common/config/configs/app.config.js'
 const logger = new Logger('Bootstrap');
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter(), {
-    // snapshot: true,
-    bufferLogs: true,
-    //  logger: new InternalDisabledLogger(),
-  });
-
-  // =========================================================
-  // Replace the default NestJS logger with Pino
-  // =========================================================
-  // app.useLogger(app.get(Logger));
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, new ExpressAdapter());
 
   app.set('query parser', 'extended');
 
   const configService = app.get(ConfigService<Configs, true>);
-
-  // =========================================================
-  // configure swagger
-  // =========================================================
-
-  // if (!isProd()) setupSwagger(app, configService);
 
   // ======================================================
   // security and middlewares
@@ -63,8 +48,6 @@ async function bootstrap() {
     }),
   );
 
-  // app.useGlobalFilters(new I18nValidationExceptionFilter({ detailedErrors: false }));
-
   // =========================================================
   // configure shutdown hooks
   // =========================================================
@@ -79,9 +62,7 @@ async function bootstrap() {
     await gracefulShutdown(app, 'SIGTERM');
   });
 
-  // useContainer(app.select(AppModule), { fallbackOnErrors: true });
-
-  const port = configService.get<AppConfigs>('app').port;
+  const port = configService.getOrThrow<AppConfigs>('app').port;
 
   await app.listen(port);
 

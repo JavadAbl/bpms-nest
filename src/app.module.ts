@@ -9,6 +9,7 @@ import { I18nModule } from 'nestjs-i18n';
 import { getI18nConfig } from '#common/libs/i18n/i18n.config.js';
 import { UserModule } from '#modules/user/user.module.js';
 import { PrismaModule } from '#common/infrastructure/database/prisma.module.js';
+import { WorkflowEngineModule } from '#modules/workflow-engine/workflow-engine.module.js';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { PrismaModule } from '#common/infrastructure/database/prisma.module.js';
     // I18nModule.forRoot(getI18nConfig()),
     PrismaModule,
     UserModule,
+    WorkflowEngineModule,
   ],
   controllers: [],
   providers: [],
