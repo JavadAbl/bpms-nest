@@ -8,6 +8,8 @@
 *.db
 *.zip
 
+tsconfig.build.tsbuildinfo
+
 # Logs
 logs
 *.log

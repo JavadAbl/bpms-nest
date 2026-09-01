@@ -1,7 +1,7 @@
 // get-many-query.request.ts
 import { IsOptional, IsIn, IsString } from 'class-validator';
 import { Type } from 'class-transformer';
-import { Prisma } from 'src/generated/prisma/client';
+import { Prisma } from '#common/infrastructure/database/generated/prisma/client.js';
 
 export class GetManyQuery {
   @IsOptional()

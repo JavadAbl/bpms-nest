@@ -3,33 +3,25 @@ import { ConfigType, registerAs } from '@nestjs/config';
 import Joi from 'joi';
 import { APP_ENVIRONMENTS } from '../envs.js';
 
-// validation schema
 export const appConfigValidationSchema = {
+  APP_PORT: Joi.number().port().required(),
   NODE_ENV: Joi.string()
     .valid(...APP_ENVIRONMENTS)
     .required(),
-  APP_PORT: Joi.number().port().required(),
-  API_URL: Joi.string().uri().required(),
-  APP_NAME: Joi.string().required(),
-  CLIENT_URL: Joi.string().uri().required(),
-  ALLOWED_HOSTS: Joi.string().optional(),
-  SWAGGER_USER: Joi.string().required(),
-  SWAGGER_PASSWORD: Joi.string().required(),
 };
 
 // config
 export const appConfig = registerAs('app', () => ({
-  port: process.env.APP_PORT,
-  prefix: process.env.APP_PREFIX,
-  env: process.env.NODE_ENV,
-  url: process.env.API_URL,
-  name: process.env.APP_NAME,
-  clientUrl: process.env.CLIENT_URL,
-  allowedOrigins: process.env?.ALLOWED_ORIGINS?.split(',') ?? '*',
-  swagger: {
-    username: process.env.SWAGGER_USER,
-    password: process.env.SWAGGER_PASSWORD,
-  },
+  env: process.env.NODE_ENV!,
+  port: process.env.APP_PORT!,
 }));
 
 export type AppConfigs = ConfigType<typeof appConfig>;
+
+export const isProd = (): boolean => {
+  return process?.env?.NODE_ENV?.startsWith('prod') ?? false;
+};
+
+export const isDev = (): boolean => {
+  return process?.env?.NODE_ENV?.startsWith('dev') ?? true;
+};

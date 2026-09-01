@@ -9,10 +9,10 @@ import { plainToInstance } from 'class-transformer';
 import { UserDto } from '../dto/response/user.dto.js';
 import { UserUpdateDto } from '../dto/request/user-update.dto.js';
 import { UserCreateDto } from '../dto/request/user-create.dto.js';
-import { GetManyReply } from '@common/dto/response/get-many-reply.js';
-import { GetManyQueryType } from '@common/dto/request/get-many-query.js';
+import { GetManyReply } from '#common/dto/response/get-many-reply.js';
+import { GetManyQueryType } from '#common/dto/request/get-many-query.js';
 import { UserRepository } from '../repositories/user.repository.js';
-import { buildFindManyArgs } from '@common/utils/prisma-util.js';
+import { buildFindManyArgs } from '#common/utils/prisma-util.js';
 
 @Injectable()
 export class UserService {

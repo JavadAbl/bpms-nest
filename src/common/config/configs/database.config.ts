@@ -8,8 +8,8 @@ export const databaseConfigValidationSchema = {
 };
 
 export const databaseConfig = registerAs('database', () => ({
-  DATABASE_URL: process.env.DB_HOST,
-  DATABASE_NAME: process.env.DB_HOST,
+  DATABASE_URL: process.env.DB_HOST!,
+  DATABASE_NAME: process.env.DB_NAME!,
 }));
 
 export type DatabaseConfigs = ConfigType<typeof databaseConfig>;

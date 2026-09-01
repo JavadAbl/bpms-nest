@@ -18,9 +18,6 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "types": ["vitest/globals", "node"],
-    "paths": {
-      "@common/*": ["./src/common/*"],
-      "@modules/*": ["./src/modules/*"]
-    }
+    "paths": { "#common/*": ["./src/common/*"], "#modules/*": ["./src/modules/*"] }
   }
 }
