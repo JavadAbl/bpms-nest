@@ -1,12 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module.js';
 import { ExpressAdapter, NestExpressApplication } from '@nestjs/platform-express';
-import { setupSwagger } from '#common/libs/swagger/swagger.js';
 import { ConfigService } from '@nestjs/config';
 import compression from 'compression';
 import helmet from 'helmet';
 import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
-import { i18nValidationErrorFactory, I18nValidationExceptionFilter } from 'nestjs-i18n';
 import chalk from 'chalk';
 import { Configs } from '#common/config/config.type.js';
 import { AppConfigs, isDev, isProd } from '#common/config/configs/app.config.js';
@@ -44,7 +42,6 @@ async function bootstrap() {
       forbidUnknownValues: false,
       validateCustomDecorators: true,
       enableDebugMessages: isDev(),
-      exceptionFactory: i18nValidationErrorFactory,
     }),
   );
 
